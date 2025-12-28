@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Navbar from './pages/Navbar';
 import Page1 from './pages/Page1';
 import Page2 from './pages/Page2';
+import Page3 from './pages/Page3';
 import Search from './pages/Search';
 import Loading from './pages/loading';
 import Product from './pages/Product';
@@ -16,6 +17,7 @@ import Contacts from './pages/Contacts';
 import Reels from './pages/Reels';
 import Dashboard from './pages/Dashboard';
 import ThreeD from './pages/ThreeD';
+import CartPage from './pages/CartPage';
 
 
 function App() {
@@ -37,6 +39,8 @@ function App() {
       <Route path="/reels"element={<Reels/>}/>
       <Route path="/dashboard" element={<Dashboard/>}/>
       <Route path="/threeD" element={<ThreeD/>}/>
+      <Route path="/page3" element={<Page3 />} />
+      <Route path="/cart" element={<CartPage />} />
 
     </Routes>
   );

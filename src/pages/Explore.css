@@ -1,7 +1,7 @@
 .explore-container {
   width: 100vw;
   height: 100vh;
-  background: #0f1115;            
+  background-color: #000000;            
   color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -100,5 +100,43 @@
   from { opacity: 1; }
   to { opacity: 0; }
 }
+/* White cart button */
+.cart-btn-wrapper {
+  position: fixed;      /* or absolute */
+  top: 24px;
+  right: 24px;
+  z-index: 1000;
+}
+.cart-btn-white {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.cart-btn-white:hover {
+  background: #f4f4f4;
+  color: #000;
+}
+
+/* Neutral badge (NOT red) */
+.cart-badge-neutral {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 12px;
+
+  background: #f60909;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 

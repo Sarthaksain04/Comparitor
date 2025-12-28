@@ -17,7 +17,11 @@
    "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "jsx": "react-jsx",
+    "moduleResolution": "node"
+
+      
     }
   }
 }

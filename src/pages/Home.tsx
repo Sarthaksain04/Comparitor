@@ -488,6 +488,7 @@ import Navbar from '../pages/Navbar';
 import './Home.css';
 import Page1 from './Page1';
 import Page2 from './Page2';
+import Page3 from './Page3';
 
 import game from '../assets/game.png';
 import headphone from '../assets/headphone.png';
@@ -683,6 +684,9 @@ const Home = () => {
 
       <section className="page2-section">
         <Page2 />
+      </section>
+      <section className="page3-section">
+        <Page3 />
       </section>
 
 

@@ -13,6 +13,8 @@
     "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-separator": "^1.1.8",
     "@radix-ui/react-slot": "^1.2.4",
+    "@react-three/drei": "^9.88.17",
+    "@react-three/fiber": "^8.15.19",
     "@splinetool/react-spline": "^4.1.0",
     "@tabler/icons-react": "^3.33.0",
     "@tailwindcss/vite": "^4.1.10",
@@ -42,7 +44,7 @@
     "react-toastify": "^11.0.5",
     "styled-components": "^6.1.17",
     "tailwind-merge": "^3.3.0",
-    "three": "^0.176.0",
+    "three": "^0.164.1",
     "twilio": "^5.7.1",
     "uuid": "^11.1.0",
     "yup": "^1.6.1"

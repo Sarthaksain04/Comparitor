@@ -1,0 +1,139 @@
+/* Container - Full Page, Black Background */
+.gesture-section {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000000;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  overflow: hidden; /* Prevents scrollbars from glow effects */
+}
+
+/* Main Content Wrapper (Split Layout) */
+.gesture-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .gesture-content {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+/* --- Left Side: Text Styling --- */
+.text-container {
+  flex: 1;
+  max-width: 600px;
+}
+
+/* Small Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 24px;
+}
+
+/* Main Headline */
+.Title {
+  font-size: 3rem;
+  line-height: 1.1;
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+.Title .Highlight {
+  background: linear-gradient(90deg, #fff, #666);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.Subtitle {
+  font-size: 1.1rem;
+  color: #888;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+/* Feature List Grid */
+.features-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.feature-icon {
+  color: #fff;
+  margin-top: 4px;
+}
+
+.feature-item h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.feature-item p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Button */
+.cta-button {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 16px 32px;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.cta-button:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-2px);
+}
+
+/* --- Right Side: Visual Styling --- */
+/* --- Right Side: Visual Styling --- */
+.visual-container {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* UPDATED BOX STYLES */
+  background-color: #F5F5DC; /* Beige Color */
+  color: #000000;            /* Text color black for contrast */
+  width: 200px;              /* Width of the box */
+  height: 350px;             /* Height of the box */
+  border-radius: 12px;       /* Rounded corners */
+  margin: 0 auto;            /* Centers the box if flex direction changes */
+}
+
+
