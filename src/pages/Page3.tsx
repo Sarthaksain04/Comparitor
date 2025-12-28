@@ -12,7 +12,7 @@ export default function Page3() {
   const navigate = useNavigate();
   
 function Model(props: { object?: Object3D }) {
-  const { scene } = useGLTF("/models/Shirt.glb");
+  const { scene } = useGLTF("/models/HeadPhone.glb");
   return <primitive object={scene} {...props} />;
 }
   return (
