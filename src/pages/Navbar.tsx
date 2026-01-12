@@ -58,6 +58,7 @@ import introVideo from "../assets/intro.mp4"; // adjust path if needed
 import { Home, User, Briefcase, FileText } from 'lucide-react'
 import { NavBar } from "@/Components/ui/tubelight-navbar"
 import Reels from "./Reels";
+import WaveButton from "@/Components/WaveButton"; // Make sure path is correct
 
 const Navbar = () => {
   const [showVideo, setShowVideo] = useState(false);
@@ -84,7 +85,10 @@ const Navbar = () => {
           <a href="/reels" className="nav-link">Reels</a>
         </div>
 
-        <div className="navbar-right">
+ 
+         
+        <div className="navbar-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+           <WaveButton size={32} />
           <div className="language-selector">
             <FaGlobe size={16} />
             <span>English</span>

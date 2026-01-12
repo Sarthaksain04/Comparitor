@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import "./Reels.css";
 
-interface Product {
+interface Reels {
   id: string;
   thumbnail: string;
   title: string;
@@ -14,7 +14,7 @@ interface Product {
 }
 
 const Reels: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Reels[]>([]);
   const [loading, setLoading] = useState(false);
   const observer = useRef<IntersectionObserver | null>(null);
 
@@ -22,7 +22,7 @@ const Reels: React.FC = () => {
     setLoading(true);
     // Simulated API call - Replace with your actual endpoint
     await new Promise(res => setTimeout(res, 800));
-    const mockData: Product[] = [
+    const mockData: Reels[] = [
       { id: Math.random().toString(), thumbnail: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500", title: "Premium Watch Series 5", price: "$349.99", oldPrice: "$449.99", rating: 4.6, reviews: 189, discount: "-22%", isNew: true },
       { id: Math.random().toString(), thumbnail: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500", title: "Leather Sneakers", price: "$89.99", oldPrice: "$129.99", rating: 4.7, reviews: 312, discount: "-31%" },
       { id: Math.random().toString(), thumbnail: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=500", title: "Vintage Camera", price: "$599.99", oldPrice: "$799.99", rating: 4.9, reviews: 89, isNew: true, discount: "-25%" },
@@ -57,7 +57,7 @@ const Reels: React.FC = () => {
   );
 };
 
-const ReelCard = ({ product }: { product: Product }) => {
+const ReelCard = ({ product }: { product: Reels }) => {
   const [liked, setLiked] = useState(false);
 
   return (

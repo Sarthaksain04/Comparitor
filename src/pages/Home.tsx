@@ -504,6 +504,15 @@ import './Landing.css';
 import './Explorepage';
 import Contacts from "./Contacts";
 
+import gsap from "gsap";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
+
+import Lenis from "@studio-freight/lenis";
+
+gsap.registerPlugin(ScrollTrigger);
+
+
+
 
 const Home = () => {
   const [query, setQuery] = useState("");
@@ -515,6 +524,47 @@ const Home = () => {
     const loggedIn = localStorage.getItem("isLoggedIn") === "true";
     setIsLoggedIn(loggedIn);
   }, []);
+
+  useEffect(() => {
+  const lenis = new Lenis({
+    smoothWheel: false,
+    duration: 1.2,
+  });
+
+  function raf(time: number) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+    lenis.on("scroll", ScrollTrigger.update);
+
+const path = document.querySelector<SVGPathElement>("#animated-path");
+  if (!path) return;
+
+  const length = path.getTotalLength();
+
+  path.style.strokeDasharray = `${length}`;
+  path.style.strokeDashoffset = `${length}`;
+
+  gsap.to(path, {
+    strokeDashoffset: 0,
+    scrollTrigger: {
+      trigger: path,
+      scroller: ".scroll-container", // 🔥 REQUIRED
+      start: "top 5%",
+      end: "bottom 20%",
+      scrub: 5.5,
+    },
+    ease: "none",
+  });
+
+  return () => {
+    ScrollTrigger.killAll();
+    lenis.destroy();
+  };
+}, []);
+
 
   const steps = [
     {
@@ -676,8 +726,21 @@ const Home = () => {
           />
           <span className="search-icons"></span>
         </div> */}
-      </section>
 
+        <div className="svg-path">
+        <svg width="896" height="999" viewBox="0 0 898 999" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path id="animated-path" d="M17.5044 17.5044C270.154 85.7504 249.14 260.416 242.004 267.504C234.869 274.593 187.042 368.305 116.004 277.004C44.9665 185.704 266.189 72.9639 326.017 98.0044C401.725 103.415 382.101 207.278 463.004 249.504C527.594 271.084 546.004 225.004 578.004 209.004C610.004 193.004 701.004 202.004 669.504 289.504C638.004 377.004 710.377 336.043 732.504 377.004C754.632 417.966 551.504 647.504 463.004 644.504C374.505 641.504 434.504 431.004 515.504 499.504C596.504 568.004 577.934 971.604 700.504 828.004C823.075 684.405 878.504 886.504 878.504 886.504" stroke="url(#paint0_linear_26_2)" stroke-width="20" stroke-linecap="round"/>
+        <defs>
+        <linearGradient id="paint0_linear_26_2" x1="1056" y1="191.004" x2="1004" y2="55.0044" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#FE8BBB"/>
+        <stop offset="1" stop-color="#9C79FC"/>
+        </linearGradient>
+        </defs>
+        </svg>
+      </div>
+      </section>
+     
+      
       <section className="page1-section">
         <Page1 />
       </section>

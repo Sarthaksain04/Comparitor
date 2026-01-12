@@ -8,11 +8,9 @@ const rootElement = document.getElementById('root');
 
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
-    <React.StrictMode>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </React.StrictMode>
   );
 } else {
   throw new Error("Root element not found. Make sure you have <div id='root'></div> in your index.html");
