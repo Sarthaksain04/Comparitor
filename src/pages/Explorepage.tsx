@@ -874,49 +874,176 @@ import "./Explore.css";
 
 /* ================= TYPES ================= */
 
-interface ExploreProduct {
-  id: string;
-  thumbnail: string;
-  title: string;
-  price: string;
-  oldPrice?: string;
-  rating: number;
-  reviews: number;
-  discount?: string;
-  isNew?: boolean;
+// interface ExploreProduct {
+//   id: string;
+//   thumbnail: string;
+//   title: string;
+//   price: string;
+//   oldPrice?: string;
+//   rating: number;
+//   reviews: number;
+//   discount?: string;
+//   isNew?: boolean;
   
-}
+// }
 
+interface ProductCardData {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  features: string[];
+  imageUrl: string;
+  badge?: string;
+  rating: number;
+  reviewsCount: number;
+  availability: string;
+  comparisonTags: string[];
+}
 type SearchMode = "normal" | "ai";
 
 /* ================= CARD ================= */
 
-const ExploreProductCard = ({ product }: { product: ExploreProduct }) => {
+// const ExploreProductCard = ({ product }: { product: ExploreProduct }) => {
+//   return (
+//     <div className="exp-card-item">
+//       <div className="exp-card-media">
+//         <img
+//           src={product.thumbnail}
+//           alt={product.title}
+//           className="exp-card-img"
+//         />
+//       </div>
+
+//       <div className="exp-card-content">
+//         <h4>{product.title}</h4>
+
+//         <div className="exp-card-rating">
+//           ⭐ {product.rating} ({product.reviews})
+//         </div>
+
+//         <div className="exp-price-row">
+//           <span className="exp-price-now">{product.price}</span>
+//           {product.oldPrice && (
+//             <span className="exp-price-old">{product.oldPrice}</span>
+//           )}
+//         </div>
+
+//         <button className="exp-add-cart-pill">Add to Cart</button>
+//       </div>
+//     </div>
+//   );
+// };
+
+const STORE_LOGOS: Record<string, string> = {
+  Amazon: "/logos/amazon.png",
+  Flipkart: "/logos/flipkart.png",
+  Meesho: "/logos/meesho.png",
+  Croma: "/logos/croma.jpg",
+  Myntra: "/logos/myntra.png",
+  JioMart: "/logos/jiomart.png",
+};
+
+
+
+
+// const ExploreProductCard = ({ product }: { product: ProductCardData }) => {
+const ExploreProductCard = ({
+  product,
+  isInCart,
+  onAddToCart,
+}: {
+  product: ProductCardData;
+  isInCart: (id: string) => boolean;
+  onAddToCart: (product: ProductCardData) => void;
+}) => {
   return (
     <div className="exp-card-item">
+      {/* IMAGE */}
       <div className="exp-card-media">
         <img
-          src={product.thumbnail}
-          alt={product.title}
+          src={product.imageUrl}
+          alt={product.name}
           className="exp-card-img"
         />
+
+        {/* BADGE */}
+        {product.badge && (
+          <div className="exp-badge-container">
+            <span className="exp-badge-promo">{product.badge}</span>
+          </div>
+        )}
       </div>
 
+      {/* CONTENT */}
       <div className="exp-card-content">
-        <h4>{product.title}</h4>
+        {/* NAME */}
+        <h4 className="exp-card-title">{product.name}</h4>
 
+        {/* DESCRIPTION */}
+        <p style={{ fontSize: "12px", color: "#555" }}>
+          {product.description}
+        </p>
+
+        {/* RATING */}
         <div className="exp-card-rating">
-          ⭐ {product.rating} ({product.reviews})
+          <span className="exp-star-icon">⭐</span>
+          {product.rating} ({product.reviewsCount})
         </div>
 
+        {/* PRICE + AVAILABILITY */}
         <div className="exp-price-row">
           <span className="exp-price-now">{product.price}</span>
-          {product.oldPrice && (
-            <span className="exp-price-old">{product.oldPrice}</span>
-          )}
+          <span
+            style={{
+              fontSize: "11px",
+              color: product.availability === "in stock" ? "green" : "red",
+            }}
+          >
+            {product.availability}
+          </span>
         </div>
 
-        <button className="exp-add-cart-pill">Add to Cart</button>
+        {/* FEATURES */}
+        <ul style={{ fontSize: "11px", paddingLeft: "14px", color: "#444" }}>
+          {product.features.map((f, i) => (
+            <li key={i}>{f}</li>
+          ))}
+        </ul>
+
+        {/* TAGS */}
+        <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+          {product.comparisonTags.map((tag, i) => (
+            <span
+              key={i}
+              style={{
+                fontSize: "10px",
+                padding: "4px 6px",
+                borderRadius: "6px",
+                background: "#e5e7eb",
+                color: "#111",
+                fontWeight: 600,
+              }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        {/* CTA */}
+        {/* <button className="exp-add-cart-pill">Add to Cart</button> */}
+       <button
+          className="exp-add-cart-pill"
+          style={{
+            background: isInCart(product.id) ? "#16a34a" : "#000",
+          }}
+          onClick={() => onAddToCart(product)}
+          disabled={isInCart(product.id)}
+        >
+          {isInCart(product.id) ? "Added to Cart ✓" : "Add to Cart"}
+        </button>
+
+
       </div>
     </div>
   );
@@ -925,12 +1052,29 @@ const ExploreProductCard = ({ product }: { product: ExploreProduct }) => {
 /* ================= PAGE ================= */
 
 export default function Explorepage() {
-  const navigate = useNavigate();
+ 
 
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
-  const [products, setProducts] = useState<ExploreProduct[]>([]);
+  const [products, setProducts] = useState<ProductCardData[]>([]);
   const [loading, setLoading] = useState(false);
 
+const [cartItems, setCartItems] = useState<ProductCardData[]>([]);
+
+const cartCount = cartItems.length;
+
+function isInCart(productId: string) {
+  return cartItems.some((item) => item.id === productId);
+}
+
+function handleAddToCart(product: ProductCardData) {
+  setCartItems((prev) => {
+    if (prev.some((p) => p.id === product.id)) return prev;
+    return [...prev, product];
+  });
+}
+
+ 
   // 🔥 THIS IS THE KEY
   const searchModeRef = useRef<SearchMode>("normal");
 
@@ -953,7 +1097,9 @@ export default function Explorepage() {
       });
 
       const data = await res.json();
-      const results = data.cleaned_products || [];
+      // const results = data.cleaned_products || [];
+      const results = data.results || [];
+
 
       localStorage.setItem("searchResults", JSON.stringify(results));
 
@@ -962,18 +1108,35 @@ export default function Explorepage() {
         navigate(`/loading?query=${encodeURIComponent(query)}`);
       } else {
         // 🔍 NORMAL SEARCH → SHOW HERE
-        setProducts(
-          results.map((p: any, i: number , item : any) => ({
-            id: p._id || i.toString(),
-            title: p.title,
-            price: p.price,
-            oldPrice: p.old_price,
-            rating: Number(p.rating) || 0,
-            reviews: Number(p.reviews) || 0,
-            thumbnail: item.thumbnail ,
+        // setProducts(
+        //   results.map((item : any , i: number ) => ({
+        //     // id: item._id || i.toString(),
+        //     id: i.toString(),
+        //     title: item.title,
+        //     price: item.price,
+        //     oldPrice: item.old_price,
+        //     rating: Number(item.rating) || 0,
+        //     reviews: Number(item.reviews) || 0,
+        //     thumbnail: item.thumbnail ,
           
-          }))
-        );
+        //   }))
+        // );
+        setProducts(
+        results.map((item: any, index: number) => ({
+          id: index.toString(),
+          name: item.title,
+          description: item.brand || "—",
+          price: item.price || "—",
+          features: [item.source || "Source Unknown"],
+          imageUrl: item.thumbnail,
+          badge: item.source,
+          rating: parseFloat(item.rating) || 4.5,
+          reviewsCount: parseInt(item.reviews) || 0,
+          availability: "in stock",
+          comparisonTags: ["AI", "Smart", "Verified"],
+        }))
+      );
+
       }
     } catch (err) {
       console.error(err);
@@ -1022,17 +1185,21 @@ export default function Explorepage() {
           </div>
         </div>
 
-        <div className="cart-fixed-pos">
-          <Button
-    variant="outline"
-    size="lg"
-    className="cart-btn-white relative gap-2"
-    onClick={() => navigate("/cart")}
-  >
-    <ShoppingCart className="h-5 w-5" />
-    <span className="font-semibold">Cart</span>
-    <Badge className="cart-badge-neutral">3</Badge>
-  </Button>
+              <div className="cart-fixed-pos">
+                <Button
+                variant="outline"
+                size="lg"
+                className="cart-btn-white relative gap-2"
+                onClick={() => navigate("/cart")}
+              >
+            <ShoppingCart className="h-5 w-5" />
+            <span className="font-semibold">Cart</span>
+            {/* <Badge className="cart-badge-neutral">3</Badge> */}
+            {cartCount > 0 && (
+                <Badge className="cart-badge-neutral">{cartCount}</Badge>
+              )}
+
+          </Button>
         </div>
       </div>
 
@@ -1041,9 +1208,15 @@ export default function Explorepage() {
         {loading && <p className="text-white">Loading...</p>}
 
         <div className="exp-grid-layout">
-          {products.map((p) => (
-            <ExploreProductCard key={p.id} product={p} />
-          ))}
+         {products.map((item) => (
+  <ExploreProductCard
+    key={item.id}
+    product={item}
+    isInCart={isInCart}
+    onAddToCart={handleAddToCart}
+  />
+))}
+
         </div>
       </div>
 

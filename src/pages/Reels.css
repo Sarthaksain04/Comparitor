@@ -47,6 +47,25 @@
   display: block;
 }
 
+.reel-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16; /* 🔥 PERFECT SHORTS RATIO */
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.reel-media iframe,
+.reel-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  object-fit: cover;
+}
+
+
 /* Badges */
 .badge-container {
     position: absolute;
