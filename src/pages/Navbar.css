@@ -10,6 +10,8 @@
     left: 0;
     right: 0;
     z-index: 1000;
+    transition: color 0.25s ease;
+
   }
   
   .navbar-left {
@@ -19,13 +21,31 @@
     margin-left: -112px;
   }
 
+  .navbar-light {
+  color: white;
+}
+
+/* CONTACT PAGE (white page → black text) */
+.navbar-dark {
+  color: black;
+}
+
+.navbar * {
+  color: inherit;
+}
+
+.nav-link {
+  text-decoration: none;
+  font-weight: 400;
+}
+
   /* src/pages/Navbar.css */
 .navbar-left .logo {
   display: flex;
   align-items: center;
   font-size: 2rem;
   font-weight: bold;
-  color: rgb(255, 255, 255);
+  /* color: rgb(255, 255, 255); */
   padding: 10px;
   margin-left: -30px;
 }
@@ -37,7 +57,7 @@
   }
   
   .nav-link {
-    color: #ffffff;
+    /* color: #ffffff; */
     font-weight: 600;
     text-decoration: none;
     transition: color 0.3s;
@@ -57,7 +77,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    color: #ffffff;
+    /* color: #ffffff; */
     cursor: pointer;
     transition: color 0.3s;
   }

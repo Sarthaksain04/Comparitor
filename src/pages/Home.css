@@ -209,6 +209,9 @@ section {
 .page2-section {
   background-color: #ffffff;
 }
+.contact{
+  background-color: #f9f9f9;
+}
 /* .promo-image {
   max-width: 5%;
   height: auto;
@@ -463,3 +466,27 @@ section {
   margin-top: 110px;
   margin-left: -57px;
 }
+
+
+.custom-slider {
+  position: fixed;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 220px;
+  background: #d9d9df;
+  border-radius: 10px;
+  z-index: 9999;
+}
+
+.custom-slider-thumb {
+  width: 6px;
+  height: 40px;
+  background: #000;
+  border-radius: 10px;
+  position: absolute;
+  top: 80px;
+}
+
+

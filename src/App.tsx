@@ -1,28 +1,39 @@
+import { useState } from "react";
 import { Route, Routes } from 'react-router-dom';
+
 import Button from './pages/Button';
 
+import CartPage from './pages/CartPage';
+import Compared from './pages/Compared';
+import Contacts from './pages/Contacts';
+import Dashboard from './pages/Dashboard';
+import Explorepage from './pages/Explorepage';
 import Home from './pages/Home';
+import Loading from './pages/loading';
 import Login from './pages/Login';
 import Navbar from './pages/Navbar';
 import Page1 from './pages/Page1';
 import Page2 from './pages/Page2';
 import Page3 from './pages/Page3';
-import Search from './pages/Search';
-import Loading from './pages/loading';
+import Preloader from './pages/Preloader';
 import Product from './pages/Product';
-import Compared from './pages/Compared';
 import Productlist from './pages/Productlist';
-import Explorepage from './pages/Explorepage';
-import Contacts from './pages/Contacts';
 import Reels from './pages/Reels';
-import Dashboard from './pages/Dashboard';
+import Search from './pages/Search';
 import ThreeD from './pages/ThreeD';
-import CartPage from './pages/CartPage';
+import ContactPage from "./pages/ContactPage";
+import Newlog from "./pages/newlog";
 
 
 function App() {
+    const [isLoading, setIsLoading] = useState(true);
+
   return (
-    <Routes>
+    <>
+    {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
+       {!isLoading && (
+        
+    <Routes> 
       <Route path="/" element={<Home />} />
       <Route path="/navbar" element={<Navbar />} />
       <Route path="/button" element={<Button />} />
@@ -41,8 +52,12 @@ function App() {
       <Route path="/threeD" element={<ThreeD/>}/>
       <Route path="/page3" element={<Page3 />} />
       <Route path="/cart" element={<CartPage />} />
+      <Route path="/contactpage" element={<ContactPage />} />
+      <Route path="/newlog" element={<Newlog />} />
 
     </Routes>
+      )}
+    </>
   );
 }
 

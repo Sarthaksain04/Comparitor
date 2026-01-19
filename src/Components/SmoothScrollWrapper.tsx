@@ -8,7 +8,7 @@ export default function SmoothScrollWrapper({
 }) {
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 2.2,          // smooth + slightly slow
+      duration: 15.2,          // smooth + slightly slow
       smoothWheel: true,
       wheelMultiplier: 0.85,
         touchMultiplier: 0.7,

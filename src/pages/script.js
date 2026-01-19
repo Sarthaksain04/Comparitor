@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     strokeDashoffset: 0,
     scrollTrigger: {
       trigger: "#animated-path",
-      start: "top 80%",
+      start: "top 8%",
       end: "bottom 20%",
       scrub: true,
     },

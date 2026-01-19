@@ -136,4 +136,42 @@
   margin: 0 auto;            /* Centers the box if flex direction changes */
 }
 
+.continue-scroll-btn {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  color: #000;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  z-index: 10;
+}
+
+.continue-scroll-btn .arrow {
+  font-size: 18px;
+  animation: bounce 1.4s infinite;
+}
+
+.continue-scroll-btn:hover {
+  transform: translateX(-50%) scale(1.05);
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
 
