@@ -189,4 +189,12 @@
   width: 120px;
   height: 1px;
   background: #666;
+    transform: scaleX(1);
+
+}
+.next-page .line {
+  width: 120px;
+  height: 1px;
+  background: #666;
+  transform-origin: left center;
 }

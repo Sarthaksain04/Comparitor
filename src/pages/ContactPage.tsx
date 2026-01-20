@@ -1,8 +1,35 @@
 import React from "react";
 import "./ContactPage.css";
 import { TextAnimate } from "../Components/ui/text-animate";
+import { useEffect } from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
+
 
 function ContactPage() {
+   useEffect(() => {
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".projects-section",
+      scroller: ".scroll-container", // 🔥 THIS IS THE KEY
+      start: "bottom bottom",
+      end: "+=180",
+      scrub: true,
+    },
+  });
+
+  tl.fromTo(".next-text", { y: 12, opacity: 0 }, { y: 0, opacity: 1 })
+    .fromTo(".next-page .line", { scaleX: 0 }, { scaleX: 1 }, 0)
+    .fromTo(".arrow", { x: -8, opacity: 0 }, { x: 0, opacity: 1 }, 0);
+
+  return () => {
+    tl.scrollTrigger?.kill();
+    tl.kill();
+  };
+}, []);
+
+
   return (
     <>
     <section className="contact-wrapper">
@@ -125,11 +152,12 @@ our newsletter`}
           <span>+</span>
         </div>
 
-        <div className="next-page">
-          <span>NEXT PAGE</span>
-          <div className="line"></div>
-          <span>→</span>
-        </div>
+<div className="next-page" id="nextPageTrigger">
+  <span className="next-text">NEXT PAGE</span>
+  <div className="line"></div>
+  <span className="arrow">→</span>
+</div>
+
       </section>
     </>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import "./Preloader.css";
+import woosh from "../assets/woosh.mp3";
 
 type PreloaderProps = {
   onComplete: () => void;
@@ -13,6 +14,8 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const loaderRef = useRef<HTMLDivElement>(null);
   const loader1Ref = useRef<HTMLDivElement>(null);
   const loader2Ref = useRef<HTMLDivElement>(null);
+  const wooshRef = useRef<HTMLAudioElement | null>(null);
+
 
   gsap.set(loaderRef.current, {
   xPercent: -50,
@@ -22,6 +25,10 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
 
 
   useEffect(() => {
+    wooshRef.current = new Audio(woosh);
+    wooshRef.current.volume = 0.8;   // adjust if needed
+    wooshRef.current.preload = "auto";
+
     if (
       !counter1Ref.current ||
       !counter2Ref.current ||
@@ -92,6 +99,12 @@ tl.to(
     scale: 100,
     duration: 1.1,
     ease: "power3.inOut",
+    onStart: () => {
+      if (wooshRef.current) {
+        wooshRef.current.currentTime = 0;
+        wooshRef.current.play();
+      }
+    },
   },
   6.4
 );
@@ -120,6 +133,8 @@ tl.to(
 );
 
     return () => {
+      wooshRef.current?.pause();
+      wooshRef.current = null;
       tl.kill();
     };
   }, [onComplete]);
