@@ -139,6 +139,28 @@ FuturisticProductCardProps) => {
   const [isLiked, setIsLiked] = useState(false);
   const [glowPosition, setGlowPosition] = useState({ x: 0, y: 0 });
   const [isSelected, setIsSelected] = useState(isSelectedProp);
+const [added, setAdded] = useState(false);
+
+async function handleAddToCart() {
+  if (added) return;
+
+  try {
+    const res = await fetch("http://127.0.0.1:8000/wishlist/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(product), // 👈 product object
+    });
+
+    const data = await res.json();
+
+    if (data.status === "added" || data.status === "already_added") {
+      setAdded(true);
+    }
+  } catch (err) {
+    console.error("❌ Failed to add to wishlist:", err);
+  }
+}
+
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -245,7 +267,7 @@ FuturisticProductCardProps) => {
         {/* Badge */}
         {product.badge && (
           <motion.div
-            className="absolute top-4 left-14 z-20"
+            className="absolute top-1 left-15 z-20"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
@@ -257,7 +279,7 @@ FuturisticProductCardProps) => {
         )}
 
         {/* Action Buttons */}
-        <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">
+        <div className="absolute top-5 right-4 z-20 flex flex-col gap-2">
           <motion.button
             className="p-2 rounded-full bg-black/50 backdrop-blur-sm border border-gray-700 text-gray-300 hover:text-red-400 transition-colors"
             onClick={() => setIsLiked(!isLiked)}
@@ -276,11 +298,11 @@ FuturisticProductCardProps) => {
         </div>
 
         {/* Product Image */}
-        <div className="relative h-48 overflow-hidden">
+        <div className="relative h-190px overflow-hidden">
           <motion.img
             src={product.imageUrl}
             alt={product.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain bg-white"
             style={{
               filter: isHovered ? 'brightness(1.1) contrast(1.1)' : 'brightness(0.9) contrast(0.9)',
             }}
@@ -289,15 +311,17 @@ FuturisticProductCardProps) => {
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
         </div>
 
+
+
         {/* Content Section */}
-        <div className="relative p-4 z-20 flex-grow flex flex-col gap-2"style={{ marginLeft: '6px'  }}>
+        <div className="relative top-3 p-4 z-20 flex-grow flex flex-col gap-1"style={{ marginLeft: '6px'  }}>
         {product.rating && (
-        <div className="flex items-center gap-2 mb-3">
+        <div className="flex items-center gap-3 mb-3">
         <div className="flex items-center gap-1">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className={`w-4 h-4 ${
+                    className={`w- h-4 ${
                       i < Math.floor(product.rating!) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'
                     }`}
                   />
@@ -310,7 +334,7 @@ FuturisticProductCardProps) => {
           )}
 
           <motion.h3
-            className="text-xl font-bold text-white mb-2 leading-tight"
+            className="text-xl font-bold text-white mb-2 leading-tight "
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
@@ -319,7 +343,7 @@ FuturisticProductCardProps) => {
           </motion.h3>
 
           <motion.p
-            className="text-gray-400 text-sm mb-4 line-clamp-2"
+            className=" text-gray-400 text-sm mb-4 line-clamp-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
@@ -377,7 +401,7 @@ FuturisticProductCardProps) => {
               {product.price}
             </motion.div>
 
-            <motion.button
+            {/* <motion.button
               className=" flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold text-sm hover:from-purple-700 hover:to-blue-700 transition-all duration-200 shadow-lg"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -389,7 +413,31 @@ FuturisticProductCardProps) => {
             >
               <ShoppingCart className="w-4 h-4"  />
               Add to Cart
-            </motion.button>
+            </motion.button> */}
+
+            
+
+            <motion.button
+              className={`flex items-center gap-2 px-4 py-3 rounded-lg 
+                text-white font-semibold text-sm transition-all duration-200 shadow-lg
+                ${
+                  added
+                    ? "bg-green-600 cursor-not-allowed"
+                    : "bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+                }`}
+                  whileHover={!added ? { scale: 1.05 } : {}}
+                  whileTap={!added ? { scale: 0.95 } : {}}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.8 }}
+                  style={{ margin: "20px" }}
+                  onClick={handleAddToCart}
+                  disabled={added}
+                >
+                  <ShoppingCart className="w-4 h-4 " />
+                  {added ? "Added to Cart ✓" : "Add to Cart"}
+                </motion.button>
+
           </div>
         </div>
 

@@ -157,7 +157,7 @@
 // //       {/* 🛒 CART BUTTON */}
 // //       <CartButtonOnly totalItems={3} navigate={navigate} />
 
-// //       {/* 🔍 SEARCH BAR */}
+// //       {/*  SEARCH BAR */}
 // //       <div className="floating-search-bar">
 // //         <input
 // //           type="text"
@@ -269,7 +269,7 @@
 //       {/* 🛒 CART BUTTON */}
 //       <CartButtonOnly totalItems={3} navigate={navigate} />
 
-//       {/* 🔍 SEARCH BAR */}
+//       {/*  SEARCH BAR */}
 //       <div className="floating-search-bar">
 //         <input
 //           type="text"
@@ -1067,12 +1067,26 @@ function isInCart(productId: string) {
   return cartItems.some((item) => item.id === productId);
 }
 
-function handleAddToCart(product: ProductCardData) {
-  setCartItems((prev) => {
-    if (prev.some((p) => p.id === product.id)) return prev;
-    return [...prev, product];
-  });
+async function handleAddToCart(product: ProductCardData) {
+  try {
+    const res = await fetch("http://127.0.0.1:8000/wishlist/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    });
+
+    const data = await res.json();
+
+    if (data.status === "added") {
+      setCartItems((prev) => [...prev, product]);
+    }
+  } catch (error) {
+    console.error("❌ Failed to add to wishlist:", error);
+  }
 }
+
 
  
   // 🔥 THIS IS THE KEY
@@ -1134,6 +1148,7 @@ function handleAddToCart(product: ProductCardData) {
           reviewsCount: parseInt(item.reviews) || 0,
           availability: "in stock",
           comparisonTags: ["AI", "Smart", "Verified"],
+          productUrl: item.link || item.product_link,
         }))
       );
 

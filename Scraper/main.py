@@ -234,6 +234,8 @@ from dotenv import load_dotenv
 from bson import ObjectId
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import Body
+
 
 from reels_api import get_product_reels
 
@@ -256,6 +258,9 @@ MONGO_URI = os.getenv("MONGODB_URI")
 client = MongoClient(MONGO_URI)
 db = client["comparitor_db"]
 collection = db["google_shopping_products"]
+wishlist_collection = db["wishlist"]
+
+
 
 # ---------------- MODELS ----------------
 class SearchRequest(BaseModel):
@@ -295,6 +300,45 @@ def search_products(payload: SearchRequest):
         "total_results": len(products),
         "results": products
     }
+
+@app.post("/wishlist/add")
+def add_to_wishlist(product: dict = Body(...)):
+    if not product.get("id"):
+        raise HTTPException(status_code=400, detail="Invalid product")
+
+    wishlist_collection.update_one(
+        {"id": product["id"]},
+        {
+            "$set": {
+                "id": product["id"],
+                "name": product.get("name"),
+                "price": product.get("price"),
+                "imageUrl": product.get("imageUrl"),
+                "badge": product.get("badge", "Store"),
+                "productUrl": product.get("productUrl") or product.get("link") or "#",
+            }
+        },
+        upsert=True
+    )
+
+    return {"status": "added"}
+
+
+@app.get("/wishlist")
+def get_wishlist():
+    items = list(wishlist_collection.find())
+    for item in items:
+        item.pop("_id", None)
+    return {"products": items}
+
+
+@app.delete("/wishlist/remove/{product_id}")
+def remove_from_wishlist(product_id: str):
+    result = wishlist_collection.delete_one({"id": product_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Product not found in wishlist")
+    return {"status": "removed"}
+
 
 @app.get("/reels")
 def reels_api():

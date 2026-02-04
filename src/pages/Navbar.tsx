@@ -69,6 +69,7 @@ const Navbar = () => {
 
   return (
     <>
+    
       <nav className="navbar">
         {/* Logo section with click to play video */}
         <div

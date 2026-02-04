@@ -323,6 +323,11 @@
 // };
 
 // export default Product;
+
+
+
+
+
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -500,7 +505,7 @@ useEffect(() => {
                   }}
                 >
                   <motion.div
-                    className="absolute inset-0 rounded-lg blur-xl bg-gradient-to-r from-cyan-500/20 to-purple-500/20"
+                    className="absolute inset-0 rounded-lg blur-xl bg-linear-to-r from-cyan-500/20 to-purple-500/20"
                     animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   />
@@ -592,6 +597,8 @@ useEffect(() => {
                 )}
               </AnimatePresence>
             </motion.div>
+        
+
           ) : (
             // <motion.div
             //   key="productlist"
@@ -613,24 +620,25 @@ useEffect(() => {
             // >
             //   This is an empty React page.
             // </motion.div>
-          
+        
+            
            <motion.div
-  key="productlist"
-  custom={direction}
-  initial={{ x: direction === 1 ? 300 : -300, opacity: 0 }}
-  animate={{ x: 0, opacity: 1 }}
-  exit={{ x: direction === 1 ? 300 : -300, opacity: 0 }}
-  transition={{ duration: 0.3, ease: "easeInOut" }}
-  style={{
-    width: "100vw",
-    height: "100vh",
-    backgroundColor: "#000",
-    color: "#fff",
-    padding: "2rem",
-    overflowY: "auto",
-    scrollbarWidth: "none", // for Firefox
-    msOverflowStyle: "none", // for IE/Edge
-  }}
+            key="productlist"
+            custom={direction}
+            initial={{ x: direction === 1 ? 300 : -300, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: direction === 1 ? 300 : -300, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            style={{
+              width: "100vw",
+              height: "100vh",
+              backgroundColor: "#000",
+              color: "#fff",
+              padding: "2rem",
+              overflowY: "auto",
+              scrollbarWidth: "none", // for Firefox
+              msOverflowStyle: "none", // for IE/Edge
+            }}
 >
   <div
     style={{
@@ -641,25 +649,27 @@ useEffect(() => {
     }}
   >
     <button
-  onClick={() => navigate("/threeD")}
-  style={{
-    position: "fixed",
-    right: "24px",
-    top: "5%",
-    transform: "translateY(-50%)",
-    padding: "14px 18px",
-    borderRadius: "10px",
-    background: "linear-gradient(135deg, #06b6d4, #9333ea)",
-    color: "#fff",
-    fontWeight: 600,
-    border: "none",
-    cursor: "pointer",
-    zIndex: 100,
-    boxShadow: "0 0 20px rgba(147,51,234,0.5)",
-  }}
+      onClick={() => navigate("/threeD")}
+      style={{
+        position: "fixed",
+        right: "24px",
+        top: "5%",
+        transform: "translateY(-50%)",
+        padding: "14px 18px",
+        borderRadius: "10px",
+        background: "linear-gradient(135deg, #06b6d4, #9333ea)",
+        color: "#fff",
+        fontWeight: 600,
+        border: "none",
+        cursor: "pointer",
+        zIndex: 100,
+        boxShadow: "0 0 20px rgba(147,51,234,0.5)",
+      }}
 >
-  3D Product View
-</button>
+        3D Product View
+      </button>
+
+
     {loading ? (
   // Placeholder shimmer while loading
   Array.from({ length: 8 }).map((_, index) => (
@@ -685,6 +695,8 @@ useEffect(() => {
         transformOrigin: "top",
       }}
     >
+
+
       <FuturisticProductCard
         product={{
           id: index.toString(),
@@ -704,6 +716,7 @@ useEffect(() => {
       />
     </div>
   ))
+  
 ) : (
   <div
     className="col-span-4 text-center text-gray-400 mt-10"

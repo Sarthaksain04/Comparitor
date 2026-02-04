@@ -22,14 +22,16 @@ import Reels from './pages/Reels';
 import Search from './pages/Search';
 import ThreeD from './pages/ThreeD';
 import ContactPage from "./pages/ContactPage";
-import Newlog from "./pages/newlog";
-
+import LoginPage2 from "./pages/LoginPage2";
+import AboutUs from "./pages/AboutUs";
+import { Toaster } from "react-hot-toast";
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
 
   return (
     <>
+     <Toaster position="top-right" />
     {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
        {!isLoading && (
         
@@ -53,7 +55,9 @@ function App() {
       <Route path="/page3" element={<Page3 />} />
       <Route path="/cart" element={<CartPage />} />
       <Route path="/contactpage" element={<ContactPage />} />
-      <Route path="/newlog" element={<Newlog />} />
+      <Route path="/loginpage2" element={<LoginPage2 />} />
+      <Route path="/aboutus" element={<AboutUs />} />
+      
 
     </Routes>
       )}

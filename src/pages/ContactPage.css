@@ -198,3 +198,38 @@
   background: #666;
   transform-origin: left center;
 }
+.projects-section {
+  position: relative;
+}
+
+.countdown {
+  position: absolute;
+  left: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  opacity: 0.65;
+}
+
+/* ================= HORIZONTAL PROGRESS BAR ================= */
+
+.progress-track-horizontal {
+  position: absolute;
+  right: 60px;
+  bottom: 170px;
+  width: 220px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.progress-fill-horizontal {
+  width: 100%;
+  height: 100%;
+  background: #22c55e; /* green */
+  border-radius: 30px;
+  transform: scaleX(0);
+}
+
