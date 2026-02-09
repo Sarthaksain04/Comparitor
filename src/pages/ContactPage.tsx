@@ -132,10 +132,10 @@ useEffect(() => {
         {/* Left Column */}
         <div className="left-column">
             <div className="address">
-              <TextAnimate animation="fadeIn" by="line" as="p">Suite 2</TextAnimate>
-              <TextAnimate animation="fadeIn" by="line" as="p">9 Marsh Street</TextAnimate>
-              <TextAnimate animation="fadeIn" by="line" as="p">Bristol, BS1 4AA</TextAnimate>
-              <TextAnimate animation="fadeIn" by="line" as="p">United Kingdom</TextAnimate>
+              <TextAnimate animation="fadeIn" by="line" as="p">A 14</TextAnimate>
+              <TextAnimate animation="fadeIn" by="line" as="p">KartarPura ,Jaipur</TextAnimate>
+              <TextAnimate animation="fadeIn" by="line" as="p">Rajasthan</TextAnimate>
+              <TextAnimate animation="fadeIn" by="line" as="p">India</TextAnimate>
             </div>
 
           <div className="social">
