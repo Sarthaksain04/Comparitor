@@ -49,7 +49,7 @@ onMouseEnter={() => {
 
         <Spline
           className="static-spline"
-          scene="https://prod.spline.design/hTBnxFWE73d5rKcG/scene.splinecode"
+        scene="https://prod.spline.design/hTBnxFWE73d5rKcG/scene.splinecode" 
         />
       </div>
 

@@ -480,6 +480,8 @@
 // };
 
 // export default Home;
+
+
 import { useEffect, useState } from "react";
 import Joyride from "react-joyride";
 import { useNavigate } from "react-router-dom";
@@ -506,6 +508,8 @@ import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
 import Lenis from "@studio-freight/lenis";
 import ContactPage from "./ContactPage";
+import { Component } from "../Components/sterling-gate-kinetic-navigation";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -513,6 +517,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 
 const Home = () => {
+ 
   const [query, setQuery] = useState("");
   const [fadeOut, setFadeOut] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -612,7 +617,7 @@ const path = document.querySelector<SVGPathElement>("#animated-path");
   return (
     <div className={`scroll-container ${fadeOut ? "fade-out" : "fade-in"}`}>
     
-
+      
       {!isLoggedIn && (
         <Joyride
           steps={steps}
@@ -626,7 +631,7 @@ const path = document.querySelector<SVGPathElement>("#animated-path");
           styles={{ options: { zIndex: 10000 } }}
         />
       )}
-
+          
       <section className="home-hero-section">
         
         <Navbar />
@@ -882,6 +887,7 @@ const path = document.querySelector<SVGPathElement>("#animated-path");
         <Page3 />
       </section>
  <section className="contact"><ContactPage/></section>
+ 
         
     </div>
   );

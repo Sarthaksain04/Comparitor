@@ -1,6 +1,7 @@
 import React from "react";
 import "./Page2.css";
 import { useNavigate } from "react-router-dom";
+import { TextAnimate } from "@/Components/ui/text-animate";
 
 
 const Page2 = () => {
@@ -18,12 +19,17 @@ const Page2 = () => {
           </div>
         </div>
 
-        <h1 className="title">Reels</h1>
+        
+     <TextAnimate animation="fadeIn" by="line" as="h1" className="title">Reels</TextAnimate>
+        <TextAnimate
+  animation="fadeIn"
+  by="line"
+  as="p"
+  className="subtitle"
+>
+  Engage viewers, boost sales, and leverage user-generated content — all 30× faster than traditional video platforms.
+</TextAnimate>
 
-        <p className="subtitle">
-          Engage viewers, boost sales, and leverage user-generated content —
-          all <strong>30× faster</strong> than traditional video platforms.
-        </p>
 
         <div className="stats">
           <div className="stat">

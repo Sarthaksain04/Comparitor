@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Route, Routes } from 'react-router-dom';
+// import "./App.css";
+
 
 import Button from './pages/Button';
 
@@ -25,6 +27,7 @@ import ContactPage from "./pages/ContactPage";
 import LoginPage2 from "./pages/LoginPage2";
 import AboutUs from "./pages/AboutUs";
 import { Toaster } from "react-hot-toast";
+import AboutUs3Denv from "./pages/AboutUs3Denv";
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
@@ -57,7 +60,7 @@ function App() {
       <Route path="/contactpage" element={<ContactPage />} />
       <Route path="/loginpage2" element={<LoginPage2 />} />
       <Route path="/aboutus" element={<AboutUs />} />
-      
+      <Route path="/aboutus3Denv" element={<AboutUs3Denv />} />
 
     </Routes>
       )}

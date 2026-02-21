@@ -652,4 +652,4 @@ function LoginPage() {
 
 
 
-export const Component = LoginPage;
+export default LoginPage;

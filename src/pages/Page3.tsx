@@ -87,6 +87,7 @@ import { Box, Hand, MousePointerClick } from "lucide-react";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { Object3D } from "three";
 import "./Page3.css";
+import { TextAnimate } from "@/Components/ui/text-animate";
 
 
 function Model(props: { object?: Object3D }) {
@@ -139,10 +140,10 @@ export default function Page3() {
             <span className="Highlight">3D Shopping.</span>
           </h1>
 
-          <p className="Subtitle">
+          <TextAnimate animation="fadeIn" by="line" as="p" className="Subtitle">
             Experience the future of e-commerce. Wave your hand to rotate,
             zoom, and inspect products in real-time. No mouse or touchscreen required.
-          </p>
+          </TextAnimate>
 
           <div className="features-grid">
             <div className="feature-item">
