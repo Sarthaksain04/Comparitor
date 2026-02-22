@@ -229,6 +229,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import AboutUs3Denv from "./AboutUs3Denv";
 import ConnectPage from "@/models/connectors";
+import { Card } from "@/Components/ui/card";
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -391,7 +392,9 @@ export default function AboutUs() {
         minHeight: "160vh",
         padding: "160px",
       }}
+      
     >
+
   {/* 3D CONNECT SECTION */}
 
 <div
@@ -407,7 +410,21 @@ export default function AboutUs() {
 >
   <ConnectPage />
 </div>
+
+{/* <div className="cards">
+    {[...Array(4)].map((_, index)=>(
+      <Card
+      key={index}
+      id={`card-${index + 1}`}
+      frontSrc="/assets/Card.png"
+      frontAlt="Card Image"
+      backText="hey Bro!"
+      
+      />
+    ))}
+</div> */}
 </section>
+
 
 
       </div>
