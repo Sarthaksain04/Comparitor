@@ -205,8 +205,273 @@
 
 
 
+// import * as THREE from "three";
+// import React, { useRef, useReducer, useMemo } from "react";
+// import { Canvas, useFrame } from "@react-three/fiber";
+// import {
+//   useGLTF,
+//   MeshTransmissionMaterial,
+//   Environment,
+//   Lightformer,
+// } from "@react-three/drei";
+// import {
+//   CuboidCollider,
+//   BallCollider,
+//   Physics,
+//   RigidBody,
+//   RapierRigidBody
+// } from "@react-three/rapier";
+// import { EffectComposer, SSAO } from "@react-three/postprocessing";
+// import { easing } from "maath";
+
+// import ConnectorsOne from "@/assets/3d/connectors.glb";
+// const accents = ["#4060ff", "#20ffa0", "#ff4060", "#ffcc00"];
+
+// type ConnectorMaterial = {
+//   color: string;
+//   roughness: number;
+//   accent?: boolean;
+// };
+
+// const shuffle = (accent = 0): ConnectorMaterial[] => [
+//   { color: "#444", roughness: 0.1 },
+//   { color: "#444", roughness: 0.75 },
+//   { color: "#444", roughness: 0.75 },
+//   { color: "white", roughness: 0.1 },
+//   { color: "white", roughness: 0.75 },
+//   { color: "white", roughness: 0.1 },
+//   { color: accents[accent], roughness: 0.1, accent: true },
+//   { color: accents[accent], roughness: 0.75, accent: true },
+//   { color: accents[accent], roughness: 0.1, accent: true },
+// ];
+
+// const ConnectPage: React.FC = () => {
+//   return (
+//     <section>
+//       {/* <div className="container"> */}
+//         <Scene style={{ borderRadius: 20 }} />
+//       {/* </div> */}
+//     </section>
+//   );
+// };
+
+// export default ConnectPage;
+
+// /* ================= SCENE ================= */
+
+// interface SceneProps {
+//   style?: React.CSSProperties;
+// }
+
+// const Scene: React.FC<SceneProps> = (props) => {
+//   const [accent, click] = useReducer(
+//     (state: number) => (state + 1) % accents.length,
+//     0
+//   );
+
+//   const connectors = useMemo(() => shuffle(accent), [accent]);
+
+//   return (
+//     <Canvas
+    
+//       onClick={click}
+//       shadows
+//       dpr={[1, 1.5]}
+//       gl={{ antialias: false }}
+//       camera={{ position: [0, 0, 15], fov: 17.5, near: 1, far: 20 }}
+//       {...props}
+//     >
+//       <color attach="background" args={["#141622"]} />
+//       <ambientLight intensity={0.4} />
+//       <spotLight
+//         position={[10, 10, 10]}
+//         angle={0.15}
+//         penumbra={1}
+//         intensity={1}
+//         castShadow
+//       />
+
+//       <Physics gravity={[0, 0, 0]}>
+//         <Pointer />
+//         {connectors.map((props, i) => (
+//           <Connector key={i} {...props} />
+//         ))}
+
+//         <Connector position={[10, 10, 5]}>
+//           <Model>
+//             <MeshTransmissionMaterial
+//               clearcoat={1}
+//               thickness={0.1}
+//               anisotropicBlur={0.1}
+//               chromaticAberration={0.1}
+//               samples={8}
+//               resolution={512}
+//               color={connectors[0].color} distortionScale={0} temporalDistortion={0}            />
+//           </Model>
+//         </Connector>
+//       </Physics>
+
+//       <EffectComposer disableNormalPass multisampling={8}>
+//       <SSAO radius={20} intensity={20} luminanceInfluence={0.5} worldDistanceThreshold={0} worldDistanceFalloff={0} worldProximityThreshold={0} worldProximityFalloff={0} />
+//       </EffectComposer>
+
+//       <Environment resolution={256}>
+//         <group rotation={[-Math.PI / 3, 0, 1]}>
+//           <Lightformer
+//             form="circle"
+//             intensity={4}
+//             rotation-x={Math.PI / 2}
+//             position={[0, 5, -9]}
+//             scale={2}
+//           />
+//         </group>
+//       </Environment>
+//     </Canvas>
+//   );
+// };
+
+// /* ================= CONNECTOR ================= */
+
+// interface ConnectorProps extends Omit<ConnectorMaterial, 'color' | 'roughness'> {
+//   position?: [number, number, number];
+//   children?: React.ReactNode;
+//   color?: string;
+//   roughness?: number;
+// }
+
+// const Connector: React.FC<ConnectorProps> = ({
+//   position,
+//   children,
+//   color,
+//   roughness,
+//   accent,
+// }) => {
+// const api = useRef<RapierRigidBody>(null);  
+// const vec = new THREE.Vector3();
+
+//   const pos = useMemo<[number, number, number]>(() => {
+//     if (position) return position;
+//     return [
+//       THREE.MathUtils.randFloatSpread(10),
+//       THREE.MathUtils.randFloatSpread(10),
+//       THREE.MathUtils.randFloatSpread(10),
+//     ];
+//   }, [position]);
+
+//   useFrame((_, delta) => {
+//     delta = Math.min(0.1, delta);
+//     if (api.current) {
+//       api.current.applyImpulse(
+//         vec.copy(api.current.translation()).negate().multiplyScalar(0.2),
+//         true
+//       );
+//     }
+//   });
+
+//   return (
+//     <RigidBody
+//       linearDamping={4}
+//       angularDamping={1}
+//       friction={0.1}
+//       position={pos}
+//       ref={api}
+//       colliders={false}
+//     >
+//       <CuboidCollider args={[0.38, 1.27, 0.38]} />
+//       <CuboidCollider args={[1.27, 0.38, 0.38]} />
+//       <CuboidCollider args={[0.38, 0.38, 1.27]} />
+
+//       {children ? children : <Model color={color} roughness={roughness} />}
+
+//       {accent && (
+//         <pointLight intensity={5} distance={2.5} color={color} />
+//       )}
+//     </RigidBody>
+//   );
+// };
+
+// /* ================= POINTER ================= */
+
+// const Pointer: React.FC = () => {
+//   const ref = useRef<RapierRigidBody>(null);
+//   const vec = new THREE.Vector3();
+
+//   useFrame(({ mouse, viewport }) => {
+//     if (ref.current) {
+//       ref.current.setNextKinematicTranslation(
+//         vec.set(
+//           (mouse.x * viewport.width) / 2,
+//           (mouse.y * viewport.height) / 2,
+//           0
+//         )
+//       );
+//     }
+//   });
+
+//   return (
+//     <RigidBody
+//       position={[0, 0, 0]}
+//       type="kinematicPosition"
+//       colliders={false}
+//       ref={ref}
+//     >
+//       <BallCollider args={[1]} />
+//     </RigidBody>
+//   );
+// };
+
+// /* ================= MODEL ================= */
+
+// interface ModelProps {
+//   children?: React.ReactNode;
+//   color?: string;
+//   roughness?: number;
+// }
+
+// const Model: React.FC<ModelProps> = ({
+//   children,
+//   color = "white",
+//   roughness = 0,
+// }) => {
+//   const ref = useRef<THREE.Mesh>(null!);
+//   const { nodes, materials } = useGLTF(
+//     ConnectorsOne
+//   ) as any; // you can type this properly if you export GLTF types
+
+//   useFrame((_, delta) => {
+//     if (ref.current) {
+//       ref.current.material = materials.base;
+//       (ref.current.material as THREE.MeshStandardMaterial).color.set(color);
+//     }
+//   });
+
+//   return (
+//     <group dispose={null}>
+//       <mesh
+//         ref={ref}
+//         castShadow
+//         receiveShadow
+//         geometry={nodes.connector.geometry}
+//         material={materials.base}
+//         scale={8}
+//       >
+//         {children}
+//       </mesh>
+//     </group>
+//   );
+// };
+
+
+
+
+
 import * as THREE from "three";
-import React, { useRef, useReducer, useMemo } from "react";
+import {
+  useRef,
+  useReducer,
+  useMemo,
+  useEffect
+} from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import {
   useGLTF,
@@ -219,12 +484,12 @@ import {
   BallCollider,
   Physics,
   RigidBody,
-  RapierRigidBody
+  RapierRigidBody,
 } from "@react-three/rapier";
 import { EffectComposer, SSAO } from "@react-three/postprocessing";
-import { easing } from "maath";
 
 import ConnectorsOne from "@/assets/3d/connectors.glb";
+
 const accents = ["#4060ff", "#20ffa0", "#ff4060", "#ffcc00"];
 
 type ConnectorMaterial = {
@@ -233,37 +498,25 @@ type ConnectorMaterial = {
   accent?: boolean;
 };
 
-const shuffle = (accent = 0): ConnectorMaterial[] => [
-  { color: "#444", roughness: 0.1 },
-  { color: "#444", roughness: 0.75 },
-  { color: "#444", roughness: 0.75 },
-  { color: "white", roughness: 0.1 },
-  { color: "white", roughness: 0.75 },
-  { color: "white", roughness: 0.1 },
-  { color: accents[accent], roughness: 0.1, accent: true },
-  { color: accents[accent], roughness: 0.75, accent: true },
-  { color: accents[accent], roughness: 0.1, accent: true },
-];
+// 20 CONNECTORS
+const shuffle = (accent = 0): ConnectorMaterial[] =>
+  Array.from({ length: 20 }).map((_, i) => ({
+    color: i % 4 === 0 ? accents[accent] : i % 2 === 0 ? "#666" : "white",
+    roughness: i % 2 ? 0.6 : 0.15,
+    accent: i % 4 === 0,
+  }));
 
-const ConnectPage: React.FC = () => {
+export default function ConnectPage() {
   return (
     <section>
-      {/* <div className="container"> */}
-        <Scene style={{ borderRadius: 20 }} />
-      {/* </div> */}
+      <Scene />
     </section>
   );
-};
-
-export default ConnectPage;
+}
 
 /* ================= SCENE ================= */
 
-interface SceneProps {
-  style?: React.CSSProperties;
-}
-
-const Scene: React.FC<SceneProps> = (props) => {
+const Scene = () => {
   const [accent, click] = useReducer(
     (state: number) => (state + 1) % accents.length,
     0
@@ -273,53 +526,65 @@ const Scene: React.FC<SceneProps> = (props) => {
 
   return (
     <Canvas
-    
       onClick={click}
       shadows
       dpr={[1, 1.5]}
-      gl={{ antialias: false }}
-      camera={{ position: [0, 0, 15], fov: 17.5, near: 1, far: 20 }}
-      {...props}
+      camera={{ position: [0, 0, 14], fov: 18 }}
     >
       <color attach="background" args={["#141622"]} />
-      <ambientLight intensity={0.4} />
+
+      {/* BRIGHTER */}
+      <ambientLight intensity={1.2} />
+
       <spotLight
         position={[10, 10, 10]}
-        angle={0.15}
+        angle={0.2}
         penumbra={1}
-        intensity={1}
+        intensity={2}
         castShadow
       />
 
       <Physics gravity={[0, 0, 0]}>
         <Pointer />
+
         {connectors.map((props, i) => (
           <Connector key={i} {...props} />
         ))}
 
-        <Connector position={[10, 10, 5]}>
+        <Connector position={[5, 5, 3]}>
           <Model>
             <MeshTransmissionMaterial
               clearcoat={1}
               thickness={0.1}
-              anisotropicBlur={0.1}
-              chromaticAberration={0.1}
+              chromaticAberration={0.08}
               samples={8}
               resolution={512}
-              color={connectors[0].color} distortionScale={0} temporalDistortion={0}            />
+              color={connectors[0].color}
+              distortionScale={0}
+              temporalDistortion={0}
+            />
           </Model>
         </Connector>
       </Physics>
 
+      {/* SOFTER SSAO */}
       <EffectComposer disableNormalPass multisampling={8}>
-      <SSAO radius={20} intensity={20} luminanceInfluence={0.5} worldDistanceThreshold={0} worldDistanceFalloff={0} worldProximityThreshold={0} worldProximityFalloff={0} />
+        <SSAO
+          radius={10}
+          intensity={6}
+          worldDistanceThreshold={0}
+          worldDistanceFalloff={0}
+          worldProximityThreshold={0}
+          worldProximityFalloff={0}
+        />
       </EffectComposer>
 
+      {/* STRONGER ENV */}
       <Environment resolution={256}>
         <group rotation={[-Math.PI / 3, 0, 1]}>
           <Lightformer
             form="circle"
-            intensity={4}
+            intensity={10}
             rotation-x={Math.PI / 2}
             position={[0, 5, -9]}
             scale={2}
@@ -332,89 +597,70 @@ const Scene: React.FC<SceneProps> = (props) => {
 
 /* ================= CONNECTOR ================= */
 
-interface ConnectorProps extends Omit<ConnectorMaterial, 'color' | 'roughness'> {
-  position?: [number, number, number];
-  children?: React.ReactNode;
-  color?: string;
-  roughness?: number;
-}
-
-const Connector: React.FC<ConnectorProps> = ({
+const Connector = ({
   position,
   children,
   color,
   roughness,
   accent,
-}) => {
-const api = useRef<RapierRigidBody>(null);  
-const vec = new THREE.Vector3();
+}: any) => {
+  const api = useRef<RapierRigidBody>(null);
+  const vec = new THREE.Vector3();
 
-  const pos = useMemo<[number, number, number]>(() => {
+  // TIGHTER SPAWN
+  const pos = useMemo(() => {
     if (position) return position;
     return [
-      THREE.MathUtils.randFloatSpread(10),
-      THREE.MathUtils.randFloatSpread(10),
-      THREE.MathUtils.randFloatSpread(10),
+      THREE.MathUtils.randFloatSpread(6),
+      THREE.MathUtils.randFloatSpread(6),
+      THREE.MathUtils.randFloatSpread(6),
     ];
   }, [position]);
 
-  useFrame((_, delta) => {
-    delta = Math.min(0.1, delta);
-    if (api.current) {
-      api.current.applyImpulse(
-        vec.copy(api.current.translation()).negate().multiplyScalar(0.2),
-        true
-      );
-    }
+  useFrame(() => {
+    api.current?.applyImpulse(
+      vec.copy(api.current.translation()).negate().multiplyScalar(0.15),
+      true
+    );
   });
 
   return (
     <RigidBody
-      linearDamping={4}
-      angularDamping={1}
-      friction={0.1}
+      linearDamping={5}
+      angularDamping={2}
       position={pos}
       ref={api}
       colliders={false}
     >
-      <CuboidCollider args={[0.38, 1.27, 0.38]} />
-      <CuboidCollider args={[1.27, 0.38, 0.38]} />
-      <CuboidCollider args={[0.38, 0.38, 1.27]} />
+      <CuboidCollider args={[0.3, 1, 0.3]} />
+      <CuboidCollider args={[1, 0.3, 0.3]} />
+      <CuboidCollider args={[0.3, 0.3, 1]} />
 
       {children ? children : <Model color={color} roughness={roughness} />}
 
-      {accent && (
-        <pointLight intensity={4} distance={2.5} color={color} />
-      )}
+      {accent && <pointLight intensity={4} distance={3} color={color} />}
     </RigidBody>
   );
 };
 
 /* ================= POINTER ================= */
 
-const Pointer: React.FC = () => {
+const Pointer = () => {
   const ref = useRef<RapierRigidBody>(null);
   const vec = new THREE.Vector3();
 
   useFrame(({ mouse, viewport }) => {
-    if (ref.current) {
-      ref.current.setNextKinematicTranslation(
-        vec.set(
-          (mouse.x * viewport.width) / 2,
-          (mouse.y * viewport.height) / 2,
-          0
-        )
-      );
-    }
+    ref.current?.setNextKinematicTranslation(
+      vec.set(
+        (mouse.x * viewport.width) / 2,
+        (mouse.y * viewport.height) / 2,
+        0
+      )
+    );
   });
 
   return (
-    <RigidBody
-      position={[0, 0, 0]}
-      type="kinematicPosition"
-      colliders={false}
-      ref={ref}
-    >
+    <RigidBody type="kinematicPosition" colliders={false} ref={ref}>
       <BallCollider args={[1]} />
     </RigidBody>
   );
@@ -422,41 +668,26 @@ const Pointer: React.FC = () => {
 
 /* ================= MODEL ================= */
 
-interface ModelProps {
-  children?: React.ReactNode;
-  color?: string;
-  roughness?: number;
-}
+const Model = ({ children, color = "white", roughness = 0 }: any) => {
+  const { nodes, materials } = useGLTF(ConnectorsOne) as any;
 
-const Model: React.FC<ModelProps> = ({
-  children,
-  color = "white",
-  roughness = 0,
-}) => {
-  const ref = useRef<THREE.Mesh>(null!);
-  const { nodes, materials } = useGLTF(
-    ConnectorsOne
-  ) as any; // you can type this properly if you export GLTF types
+  const material = useMemo(() => materials.base.clone(), [materials]);
 
-  useFrame((_, delta) => {
-    if (ref.current) {
-      ref.current.material = materials.base;
-      (ref.current.material as THREE.MeshStandardMaterial).color.set(color);
-    }
-  });
+  useEffect(() => {
+    material.color.set(color);
+    material.roughness = roughness;
+  
+  }, [color, roughness, material]);
 
   return (
-    <group dispose={null}>
-      <mesh
-        ref={ref}
-        castShadow
-        receiveShadow
-        geometry={nodes.connector.geometry}
-        material={materials.base}
-        scale={10}
-      >
-        {children}
-      </mesh>
-    </group>
+    <mesh
+      castShadow
+      receiveShadow
+      geometry={nodes.connector.geometry}
+      material={material}
+      scale={7}   // smaller
+    >
+      {children}
+    </mesh>
   );
 };
