@@ -487,7 +487,7 @@ import Joyride from "react-joyride";
 import { useNavigate } from "react-router-dom";
 
 import book from '../assets/book.png';
-import Dash from '../assets/dash.png';
+import Dash from '../assets/Dash.png';
 import earbuds from '../assets/earbuds.png';
 import game from '../assets/game.png';
 import headphone from '../assets/headphone.png';
