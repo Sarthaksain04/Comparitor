@@ -229,7 +229,6 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import AboutUs3Denv from "./AboutUs3Denv";
 import ConnectPage from "@/models/connectors";
-import { Card } from "@/Components/ui/card";
 
 
 gsap.registerPlugin(ScrollTrigger);
