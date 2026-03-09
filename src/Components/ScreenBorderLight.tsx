@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/Utils";
+import { cn } from "@/lib/utils";
+
 
 interface ScreenBorderLightProps {
   lightColor?: string;

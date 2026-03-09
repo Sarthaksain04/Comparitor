@@ -64,7 +64,7 @@
 
 // export default WaveButton;
 
-import React, { useState, useRef, useEffect } from 'react';
+import  { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const WaveButton = ({ size = 32 }) => {
