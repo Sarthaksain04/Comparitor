@@ -229,7 +229,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import AboutUs3Denv from "./AboutUs3Denv";
 import ConnectPage from "@/models/connectors";
-
+import AnimatedCard from "./AnimatedCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -409,6 +409,9 @@ export default function AboutUs() {
 >
   <ConnectPage />
 </div>
+
+ <AnimatedCard />
+
 
 {/* <div className="cards">
     {[...Array(4)].map((_, index)=>(

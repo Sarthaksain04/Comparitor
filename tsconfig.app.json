@@ -29,6 +29,6 @@
   },
 
   
-  "include": ["src", "server/app.js", "src/automation", "server/automation/removeUnverifiedAccount.js", "server/models", "server/middlewares", "server/controllers", "server/utils/axios.js", "src/three"]
+  "include": ["src", "server/app.js", "src/automation", "server/automation/removeUnverifiedAccount.js", "server/models", "server/middlewares", "server/controllers", "server/utils/axios.js", "src/three", "upload-glb.mjs"]
   // "include": ["src", "src/Components/Button.tsx"]
 }

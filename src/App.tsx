@@ -28,6 +28,7 @@ import LoginPage2 from "./pages/LoginPage2";
 import AboutUs from "./pages/AboutUs";
 import { Toaster } from "react-hot-toast";
 import AboutUs3Denv from "./pages/AboutUs3Denv";
+import AnimatedCard from "./pages/AnimatedCard";
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
@@ -61,7 +62,7 @@ function App() {
       <Route path="/loginpage2" element={<LoginPage2 />} />
       <Route path="/aboutus" element={<AboutUs />} />
       <Route path="/aboutus3Denv" element={<AboutUs3Denv />} />
-
+      <Route path="/animatedcard" element={<AnimatedCard />} />
     </Routes>
       )}
     </>
