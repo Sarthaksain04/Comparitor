@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from "react";
+import  { useEffect, useRef } from "react";
 import FuturisticProductCard from "@/Components/FuturisticProductCard"; 
 import { motion } from 'framer-motion';
 
