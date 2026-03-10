@@ -7,7 +7,7 @@ export const Button1 = () => {
        Ai Search 
       </button>
       
-      <style jsx>{`
+      <style>{`
         .rainbow-border::before,
         .rainbow-border::after {
           content: '';
