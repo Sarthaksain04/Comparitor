@@ -1,6 +1,6 @@
 import { motion, Variants } from "framer-motion";
 import * as React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 interface AnimatedTextProps extends React.HTMLAttributes<HTMLDivElement> {
   gradientColors?: string;

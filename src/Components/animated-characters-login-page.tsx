@@ -6,7 +6,7 @@ import { Input } from "../Components/ui/input";
 import { Label } from "../Components/ui/label";
 import { Checkbox } from "../Components/ui/checkbox";
 import { Eye, EyeOff, Mail, Sparkles } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 
 interface PupilProps {
